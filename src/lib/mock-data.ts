@@ -486,8 +486,8 @@ export const expenseCategoriesSeed: ExpenseCategory[] = [
 
 export const personalAssetsSeed: PersonalAsset[] = [
   // Crypto (49.5%)
-  { id: "pa-btc", userId: DEMO_USER, name: "Bitcoin Core", symbol: "BTC", assetType: "crypto", quantity: 0.55, avgBuyPrice: 92000, currentPrice: 66527, currency: "USD", platform: "Binance", notes: "Long-term core, 89% of crypto allocation", isActive: true, createdAt: "2024-09-15T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-eth", userId: DEMO_USER, name: "Ethereum", symbol: "ETH", assetType: "crypto", quantity: 2.5, avgBuyPrice: 3800, currentPrice: 1750, currency: "USD", platform: "Binance", isActive: true, createdAt: "2024-10-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
+  { id: "pa-btc", userId: DEMO_USER, name: "Bitcoin Core", symbol: "BTC", assetType: "crypto", quantity: 0.32, avgBuyPrice: 92000, currentPrice: 66527, currency: "USD", platform: "Binance", notes: "Long-term core. Target akumulasi 0.5 BTC (perlu 0.18 lagi)", isActive: true, createdAt: "2024-09-15T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
+  { id: "pa-eth", userId: DEMO_USER, name: "Ethereum", symbol: "ETH", assetType: "crypto", quantity: 1.58, avgBuyPrice: 3800, currentPrice: 1750, currency: "USD", platform: "Binance", notes: "Target akumulasi 11 ETH (perlu 9.42 lagi)", isActive: true, createdAt: "2024-10-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
   { id: "pa-mstr", userId: DEMO_USER, name: "Strategy Inc (MSTR)", symbol: "MSTR", assetType: "stock_us", quantity: 1, avgBuyPrice: 410, currentPrice: 244, currency: "USD", platform: "Stockbit", notes: "Bitcoin proxy leveraged", isActive: true, createdAt: "2024-11-10T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
   // Stocks US (20.3%)
   { id: "pa-aapl", userId: DEMO_USER, name: "Apple", symbol: "AAPL", assetType: "stock_us", quantity: 4, avgBuyPrice: 195, currentPrice: 185, currency: "USD", platform: "Stockbit", isActive: true, createdAt: "2024-12-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
@@ -573,96 +573,3 @@ export const rebalancingRulesSeed: RebalancingRule[] = [
 
 const DEMO_USER = "demo-user";
 
-export const expenseCategoriesSeed: ExpenseCategory[] = [
-  { id: "cat-makan", userId: DEMO_USER, name: "Makan & Grocery", icon: "utensils", color: "#ef4444", budgetLimit: 5500000, isActive: true },
-  { id: "cat-utility", userId: DEMO_USER, name: "Utility", icon: "zap", color: "#f59e0b", budgetLimit: 2500000, isActive: true },
-  { id: "cat-transport", userId: DEMO_USER, name: "Transport", icon: "car", color: "#3b82f6", budgetLimit: 1800000, isActive: true },
-  { id: "cat-kesehatan", userId: DEMO_USER, name: "Kesehatan", icon: "heart", color: "#ec4899", budgetLimit: 800000, isActive: true },
-  { id: "cat-zakat", userId: DEMO_USER, name: "Zakat & Wakaf", icon: "moon", color: "#10b981", budgetLimit: 500000, isActive: true },
-  { id: "cat-hiburan", userId: DEMO_USER, name: "Hiburan & Langganan", icon: "tv", color: "#8b5cf6", budgetLimit: 500000, isActive: true },
-  { id: "cat-tabungan", userId: DEMO_USER, name: "Tabungan & Investasi", icon: "piggy-bank", color: "#06b6d4", budgetLimit: 4000000, isActive: true },
-  { id: "cat-renovasi", userId: DEMO_USER, name: "Renovasi", icon: "hammer", color: "#f97316", budgetLimit: 0, isActive: true },
-  { id: "cat-lain", userId: DEMO_USER, name: "Lain-lain", icon: "more", color: "#64748b", budgetLimit: 500000, isActive: true },
-  { id: "cat-gaji", userId: DEMO_USER, name: "Gaji", icon: "wallet", color: "#22c55e", budgetLimit: 0, isActive: true },
-  { id: "cat-sidehustle", userId: DEMO_USER, name: "Side Hustle", icon: "briefcase", color: "#84cc16", budgetLimit: 0, isActive: true },
-];
-
-export const personalAssetsSeed: PersonalAsset[] = [
-  // Crypto (49.5%)
-  { id: "pa-btc", userId: DEMO_USER, name: "Bitcoin Core", symbol: "BTC", assetType: "crypto", quantity: 0.55, avgBuyPrice: 92000, currentPrice: 66527, currency: "USD", platform: "Binance", notes: "Long-term core, 89% of crypto allocation", isActive: true, createdAt: "2024-09-15T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-eth", userId: DEMO_USER, name: "Ethereum", symbol: "ETH", assetType: "crypto", quantity: 2.5, avgBuyPrice: 3800, currentPrice: 1750, currency: "USD", platform: "Binance", isActive: true, createdAt: "2024-10-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-mstr", userId: DEMO_USER, name: "Strategy Inc (MSTR)", symbol: "MSTR", assetType: "stock_us", quantity: 1, avgBuyPrice: 410, currentPrice: 244, currency: "USD", platform: "Stockbit", notes: "Bitcoin proxy leveraged", isActive: true, createdAt: "2024-11-10T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  // Stocks US (20.3%)
-  { id: "pa-aapl", userId: DEMO_USER, name: "Apple", symbol: "AAPL", assetType: "stock_us", quantity: 4, avgBuyPrice: 195, currentPrice: 185, currency: "USD", platform: "Stockbit", isActive: true, createdAt: "2024-12-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-jnj", userId: DEMO_USER, name: "Johnson & Johnson", symbol: "JNJ", assetType: "stock_us", quantity: 3, avgBuyPrice: 160, currentPrice: 156, currency: "USD", platform: "Stockbit", isActive: true, createdAt: "2024-12-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-nvda", userId: DEMO_USER, name: "Nvidia", symbol: "NVDA", assetType: "stock_us", quantity: 22, avgBuyPrice: 145, currentPrice: 157, currency: "USD", platform: "Stockbit", notes: "Concentrated 32% of US stocks — consider trim", isActive: true, createdAt: "2025-01-20T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-spy", userId: DEMO_USER, name: "S&P 500 ETF", symbol: "SPY", assetType: "stock_us", quantity: 3, avgBuyPrice: 510, currentPrice: 496, currency: "USD", platform: "Stockbit", isActive: true, createdAt: "2024-09-15T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-tsla", userId: DEMO_USER, name: "Tesla", symbol: "TSLA", assetType: "stock_us", quantity: 1, avgBuyPrice: 280, currentPrice: 249, currency: "USD", platform: "Stockbit", isActive: true, createdAt: "2025-02-15T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-vhd", userId: DEMO_USER, name: "Vanguard High Div ETF", symbol: "VYM", assetType: "stock_us", quantity: 8, avgBuyPrice: 165, currentPrice: 159, currency: "USD", platform: "Stockbit", isActive: true, createdAt: "2024-12-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  // Stocks IDX (small)
-  { id: "pa-adro", userId: DEMO_USER, name: "Adaro Energy", symbol: "ADRO", assetType: "stock_idx", quantity: 200, avgBuyPrice: 3500, currentPrice: 3450, currency: "IDR", platform: "Stockbit", isActive: true, createdAt: "2025-03-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-asii", userId: DEMO_USER, name: "Astra International", symbol: "ASII", assetType: "stock_idx", quantity: 200, avgBuyPrice: 9600, currentPrice: 9600, currency: "IDR", platform: "Stockbit", isActive: true, createdAt: "2025-03-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-indf", userId: DEMO_USER, name: "Indofood", symbol: "INDF", assetType: "stock_idx", quantity: 100, avgBuyPrice: 27000, currentPrice: 27000, currency: "IDR", platform: "Stockbit", isActive: true, createdAt: "2025-03-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  // Gold
-  { id: "pa-gold", userId: DEMO_USER, name: "Antam 24K", symbol: "ANTM", assetType: "gold", quantity: 25, avgBuyPrice: 1100000, currentPrice: 2733000, currency: "IDR", platform: "Logam Mulia", isActive: true, createdAt: "2023-06-15T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  // Liquid
-  { id: "pa-cash-bca", userId: DEMO_USER, name: "Tabungan BCA", symbol: "BCA", assetType: "cash", quantity: 80000000, avgBuyPrice: 1, currentPrice: 1, currency: "IDR", platform: "BCA", notes: "Operasional + emergency", isActive: true, createdAt: "2024-01-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-cash-mandiri", userId: DEMO_USER, name: "Tabungan Mandiri", symbol: "MANDIRI", assetType: "cash", quantity: 35380181, avgBuyPrice: 1, currentPrice: 1, currency: "IDR", platform: "Mandiri", isActive: true, createdAt: "2024-01-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-rdpu-sucor", userId: DEMO_USER, name: "Sucorinvest Money Market", symbol: "SUCRMMF", assetType: "rpu", quantity: 21844648, avgBuyPrice: 1, currentPrice: 1.045, currency: "IDR", platform: "Bibit", notes: "Yield ~4.5% p.a.", isActive: true, createdAt: "2024-06-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-rdpu-sucor-sharia", userId: DEMO_USER, name: "Sucorinvest Sharia MM", symbol: "SUCRSYR", assetType: "rpu", quantity: 17841856, avgBuyPrice: 1, currentPrice: 1.038, currency: "IDR", platform: "Bibit", isActive: true, createdAt: "2024-06-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  // Bonds
-  { id: "pa-bond-manulife", userId: DEMO_USER, name: "Manulife ORI II", symbol: "MANORI2", assetType: "bond", quantity: 20482486, avgBuyPrice: 1, currentPrice: 1.054, currency: "IDR", platform: "Bibit", notes: "Hold to maturity", isActive: true, createdAt: "2025-02-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-  { id: "pa-bond-majoris", userId: DEMO_USER, name: "Majoris Sukuk Negara", symbol: "MAJSUK", assetType: "bond", quantity: 14211685, avgBuyPrice: 1, currentPrice: 1.058, currency: "IDR", platform: "Bibit", isActive: true, createdAt: "2025-02-01T00:00:00Z", updatedAt: "2026-06-18T00:00:00Z" },
-];
-
-export const assetTransactionsSeed: AssetTransactionRecord[] = [
-  { id: "tx-1", userId: DEMO_USER, assetId: "pa-btc", type: "buy", quantity: 0.1, pricePerUnit: 60000, totalAmount: 6000, fees: 5, currency: "USD", transactionDate: "2024-09-15T00:00:00Z", createdAt: "2024-09-15T00:00:00Z" },
-  { id: "tx-2", userId: DEMO_USER, assetId: "pa-btc", type: "buy", quantity: 0.2, pricePerUnit: 95000, totalAmount: 19000, fees: 8, currency: "USD", transactionDate: "2025-01-10T00:00:00Z", createdAt: "2025-01-10T00:00:00Z" },
-  { id: "tx-3", userId: DEMO_USER, assetId: "pa-btc", type: "buy", quantity: 0.25, pricePerUnit: 108000, totalAmount: 27000, fees: 10, currency: "USD", transactionDate: "2025-08-20T00:00:00Z", createdAt: "2025-08-20T00:00:00Z" },
-  { id: "tx-4", userId: DEMO_USER, assetId: "pa-eth", type: "buy", quantity: 2.5, pricePerUnit: 3800, totalAmount: 9500, fees: 6, currency: "USD", transactionDate: "2024-10-01T00:00:00Z", createdAt: "2024-10-01T00:00:00Z" },
-  { id: "tx-5", userId: DEMO_USER, assetId: "pa-nvda", type: "buy", quantity: 22, pricePerUnit: 145, totalAmount: 3190, fees: 3, currency: "USD", transactionDate: "2025-01-20T00:00:00Z", createdAt: "2025-01-20T00:00:00Z" },
-];
-
-export const cashFlowEntriesSeed: CashFlowEntry[] = [
-  { id: "cf-1", userId: DEMO_USER, entryType: "income", categoryId: "cat-gaji", amount: 15500000, currency: "IDR", paymentMethod: "transfer", description: "Gaji Pokok Juni 2026", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-01T00:00:00Z" },
-  { id: "cf-2", userId: DEMO_USER, entryType: "expense", categoryId: "cat-makan", amount: 1260000, currency: "IDR", paymentMethod: "transfer", description: "Catering keluarga", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-05T00:00:00Z" },
-  { id: "cf-3", userId: DEMO_USER, entryType: "expense", categoryId: "cat-makan", amount: 3194222, currency: "IDR", paymentMethod: "transfer", description: "Groceries mingguan", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-08T00:00:00Z" },
-  { id: "cf-4", userId: DEMO_USER, entryType: "expense", categoryId: "cat-makan", amount: 800000, currency: "IDR", paymentMethod: "cash", description: "Makan weekend", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-09T00:00:00Z" },
-  { id: "cf-5", userId: DEMO_USER, entryType: "expense", categoryId: "cat-utility", amount: 1000000, currency: "IDR", paymentMethod: "auto-debit", description: "Listrik PLN", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-10T00:00:00Z" },
-  { id: "cf-6", userId: DEMO_USER, entryType: "expense", categoryId: "cat-utility", amount: 486350, currency: "IDR", paymentMethod: "auto-debit", description: "Internet IndiHome", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-12T00:00:00Z" },
-  { id: "cf-7", userId: DEMO_USER, entryType: "expense", categoryId: "cat-transport", amount: 500000, currency: "IDR", paymentMethod: "cash", description: "Bensin mobil", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-08T00:00:00Z" },
-  { id: "cf-8", userId: DEMO_USER, entryType: "expense", categoryId: "cat-transport", amount: 250000, currency: "IDR", paymentMethod: "cash", description: "Bensin motor", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-08T00:00:00Z" },
-  { id: "cf-9", userId: DEMO_USER, entryType: "expense", categoryId: "cat-zakat", amount: 400000, currency: "IDR", paymentMethod: "transfer", description: "Zakat penghasilan", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-01T00:00:00Z" },
-  { id: "cf-10", userId: DEMO_USER, entryType: "expense", categoryId: "cat-hiburan", amount: 309000, currency: "IDR", paymentMethod: "card", description: "Langganan AI tools", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-01T00:00:00Z" },
-  { id: "cf-11", userId: DEMO_USER, entryType: "expense", categoryId: "cat-tabungan", amount: 8400000, currency: "IDR", paymentMethod: "auto-debit", description: "DCA + Tabungan motor listrik", isRecurring: true, recurringFrequency: "monthly", transactionDate: "2026-06-01T00:00:00Z" },
-  { id: "cf-12", userId: DEMO_USER, entryType: "expense", categoryId: "cat-renovasi", amount: 35000000, currency: "IDR", paymentMethod: "transfer", description: "Renovasi taman besar", isRecurring: false, transactionDate: "2026-03-17T00:00:00Z" },
-];
-
-export const financialGoalsSeed: FinancialGoal[] = [
-  { id: "goal-hajj", userId: DEMO_USER, name: "Haji Regular 2 Orang", type: "hajj", targetAmount: 80000000, currentAmount: 0, currency: "IDR", deadline: "2028-12-31T00:00:00Z", priority: "high", status: "active", description: "Setoran 2 x 35jt + tiket & living cost", icon: "kaaba", color: "#10b981" },
-  { id: "goal-tk", userId: DEMO_USER, name: "Dana Pendidikan TK", type: "education", targetAmount: 60000000, currentAmount: 0, currency: "IDR", deadline: "2029-06-30T00:00:00Z", priority: "high", status: "active", description: "Anak masuk TK A 2029, inflation adjusted", icon: "book", color: "#3b82f6" },
-  { id: "goal-motor", userId: DEMO_USER, name: "Motor Listrik", type: "ev", targetAmount: 25000000, currentAmount: 0, currency: "IDR", deadline: "2026-12-31T00:00:00Z", priority: "medium", status: "active", description: "Alva N3 atau Polytron Fox 350", icon: "bike", color: "#f59e0b" },
-  { id: "goal-mobil", userId: DEMO_USER, name: "Mobil Listrik", type: "ev", targetAmount: 350000000, currentAmount: 0, currency: "IDR", deadline: "2028-06-30T00:00:00Z", priority: "medium", status: "active", description: "BYD Atto 1 atau Jaecoo J5", icon: "car", color: "#ef4444" },
-  { id: "goal-emergency", userId: DEMO_USER, name: "Emergency Fund", type: "emergency", targetAmount: 70000000, currentAmount: 0, currency: "IDR", deadline: "2027-12-31T00:00:00Z", priority: "critical", status: "active", description: "3-6 bulan expense di RDPU", icon: "shield", color: "#06b6d4" },
-];
-
-export const goalAllocationsSeed: GoalAllocation[] = [];
-
-export const insurancePoliciesSeed: InsurancePolicy[] = [
-  { id: "ins-bpjs", userId: DEMO_USER, policyType: "health", provider: "BPJS Kesehatan", policyNumber: "0001-2345-6789", coverageAmount: 0, currency: "IDR", premiumAmount: 150000, premiumFrequency: "monthly", startDate: "2024-01-01T00:00:00Z", expiryDate: null, isActive: true, beneficiary: "Keluarga" },
-];
-
-export const netWorthSnapshotsSeed: NetWorthSnapshot[] = [
-  { id: "nw-2025-12", userId: DEMO_USER, snapshotDate: "2025-12-31T00:00:00Z", totalAssets: 920000000, totalLiabilities: 0, netWorth: 920000000, breakdownJson: { crypto: 480000000, stock_us: 175000000, stock_idx: 5000000, gold: 60000000, liquid: 200000000 }, currency: "IDR" },
-  { id: "nw-2026-06", userId: DEMO_USER, snapshotDate: "2026-06-18T00:00:00Z", totalAssets: 857015707, totalLiabilities: 0, netWorth: 857015707, breakdownJson: { crypto: 424054094, stock_us: 174035757, stock_idx: 5310000, gold: 69165000, liquid: 189760856 }, currency: "IDR" },
-];
-
-export const rebalancingRulesSeed: RebalancingRule[] = [
-  { id: "rb-cash", userId: DEMO_USER, assetType: "cash", targetPct: 8.0, thresholdPct: 3.0, isActive: true },
-  { id: "rb-rpu", userId: DEMO_USER, assetType: "rpu", targetPct: 5.0, thresholdPct: 3.0, isActive: true },
-  { id: "rb-bond", userId: DEMO_USER, assetType: "bond", targetPct: 5.0, thresholdPct: 3.0, isActive: true },
-  { id: "rb-stock-idx", userId: DEMO_USER, assetType: "stock_idx", targetPct: 5.0, thresholdPct: 3.0, isActive: true },
-  { id: "rb-stock-us", userId: DEMO_USER, assetType: "stock_us", targetPct: 15.0, thresholdPct: 5.0, isActive: true },
-  { id: "rb-gold", userId: DEMO_USER, assetType: "gold", targetPct: 10.0, thresholdPct: 3.0, isActive: true },
-  { id: "rb-crypto", userId: DEMO_USER, assetType: "crypto", targetPct: 20.0, thresholdPct: 5.0, isActive: true },
-];
