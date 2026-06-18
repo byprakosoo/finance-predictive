@@ -130,6 +130,7 @@ export const createAllocationSchema = z.object({
 export const createInsuranceSchema = z.object({
   policyType: z.enum(["life", "health", "critical_illness", "disability", "auto", "property", "other"]),
   provider: z.string().min(1).max(200),
+  providerId: z.string().max(100).optional(),
   policyNumber: z.string().max(100).optional(),
   coverageAmount: z.coerce.number().nonnegative(),
   currency: currencyEnum.default("IDR"),
@@ -139,6 +140,8 @@ export const createInsuranceSchema = z.object({
   expiryDate: z.string().optional(),
   beneficiary: z.string().max(200).optional(),
   isActive: z.coerce.boolean().default(true),
+  akadType: z.enum(["tabarru", "tijarah", "mixed"]).optional(),
+  isShariahCompliant: z.coerce.boolean().default(false),
   notes: z.string().max(2000).optional(),
 });
 

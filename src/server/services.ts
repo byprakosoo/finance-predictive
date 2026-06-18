@@ -1,4 +1,5 @@
 import { mockStore } from "@/server/mock-store";
+import { recommendShariahProvider, findShariahProvidersByType } from "@/lib/insurance-providers";
 import type { Chain } from "@/lib/types";
 
 // Estimated USD/IDR for live value normalization. Will be replaced by FX service.
@@ -196,7 +197,11 @@ export const insuranceService = {
   coverageSummary(userId: string) {
     const policies = mockStore.listInsurance(userId);
     const totalCoverage: Record<string, number> = {};
+    const totalCoverageShariah: Record<string, number> = {};
     let monthlyPremium = 0;
+    let monthlyPremiumShariah = 0;
+    let conventionalPolicyCount = 0;
+
     for (const p of policies) {
       totalCoverage[p.policyType] = (totalCoverage[p.policyType] ?? 0) + p.coverageAmount;
       const freqMultiplier: Record<string, number> = {
@@ -206,31 +211,159 @@ export const insuranceService = {
         annual: 1 / 12,
         one_time: 0,
       };
-      monthlyPremium += p.premiumAmount * (freqMultiplier[p.premiumFrequency] ?? 0);
+      const monthly = p.premiumAmount * (freqMultiplier[p.premiumFrequency] ?? 0);
+      monthlyPremium += monthly;
+      if (p.isShariahCompliant) {
+        totalCoverageShariah[p.policyType] = (totalCoverageShariah[p.policyType] ?? 0) + p.coverageAmount;
+        monthlyPremiumShariah += monthly;
+      } else {
+        conventionalPolicyCount += 1;
+      }
     }
-    const gaps: Array<{ type: string; recommendation: string; priority: string }> = [];
-    if ((totalCoverage.life ?? 0) === 0) {
+
+    // Build recommendations using shariah provider catalog.
+    // Only flag gaps for active risks user is exposed to.
+    const gaps: Array<{
+      type: string;
+      priority: "critical" | "high" | "medium";
+      recommendation: string;
+      providers: Array<{ providerId: string; providerName: string; productName: string; indicativePremiumIdr: number; website: string }>;
+    }> = [];
+
+    const lifeCoverage = totalCoverageShariah.life ?? 0;
+    if (lifeCoverage === 0) {
+      const lifeOptions = findShariahProvidersByType("life")
+        .flatMap((prov) =>
+          prov.products
+            .filter((prod) => prod.type === "life")
+            .map((prod) => ({
+              providerId: prov.id,
+              providerName: prov.name,
+              productName: prod.productName,
+              indicativePremiumIdr: prod.indicativePremiumIdr,
+              website: prov.website,
+            }))
+        )
+        .sort((a, b) => a.indicativePremiumIdr - b.indicativePremiumIdr)
+        .slice(0, 3);
       gaps.push({
         type: "life",
-        recommendation: "Apply term life 1-2M coverage, ~500rb/month. Single income earner with infant = critical gap.",
         priority: "critical",
+        recommendation:
+          "Lo single earner dengan bayi baru lahir 3 minggu. Tanpa shariah-compliant term life, keluarga gak punya safety net kalau lo meninggal. Coverage 1-2 Miliar idealnya.",
+        providers: lifeOptions,
       });
     }
-    if ((totalCoverage.health ?? 0) === 0) {
+
+    const healthCoverage = totalCoverageShariah.health ?? 0;
+    if (healthCoverage < 100_000_000) {
+      const healthOptions = findShariahProvidersByType("health")
+        .flatMap((prov) =>
+          prov.products
+            .filter((prod) => prod.type === "health")
+            .map((prod) => ({
+              providerId: prov.id,
+              providerName: prov.name,
+              productName: prod.productName,
+              indicativePremiumIdr: prod.indicativePremiumIdr,
+              website: prov.website,
+            }))
+        )
+        .sort((a, b) => a.indicativePremiumIdr - b.indicativePremiumIdr)
+        .slice(0, 3);
       gaps.push({
         type: "health",
-        recommendation: "Add health cash plan supplement BPJS, 300-500rb/month. Provides cashless network access.",
         priority: "high",
+        recommendation:
+          "BPJS sudah ada tapi cashless-nya terbatas. Tambah shariah health cash plan supaya bisa private hospital tanpa urun biaya.",
+        providers: healthOptions,
       });
     }
-    if ((totalCoverage["critical_illness"] ?? 0) === 0) {
+
+    const ciCoverage = totalCoverageShariah.critical_illness ?? 0;
+    if (ciCoverage === 0) {
+      const ciOptions = findShariahProvidersByType("critical_illness")
+        .flatMap((prov) =>
+          prov.products
+            .filter((prod) => prod.type === "critical_illness")
+            .map((prod) => ({
+              providerId: prov.id,
+              providerName: prov.name,
+              productName: prod.productName,
+              indicativePremiumIdr: prod.indicativePremiumIdr,
+              website: prov.website,
+            }))
+        )
+        .sort((a, b) => a.indicativePremiumIdr - b.indicativePremiumIdr)
+        .slice(0, 3);
       gaps.push({
         type: "critical_illness",
-        recommendation: "Consider critical illness cover 500jt-1M, 200-300rb/month. Protects against cancer/stroke income loss.",
         priority: "medium",
+        recommendation:
+          "Critical illness cover 500jt-1M untuk income replacement kalau kena kanker/stroke. Family history perlu jadi pertimbangan.",
+        providers: ciOptions,
       });
     }
-    return { totalCoverage, monthlyPremium, upcomingPremiums: [], gaps };
+
+    const educationCoverage = totalCoverageShariah.education ?? 0;
+    if (educationCoverage === 0) {
+      const eduOptions = findShariahProvidersByType("education")
+        .flatMap((prov) =>
+          prov.products
+            .filter((prod) => prod.type === "education")
+            .map((prod) => ({
+              providerId: prov.id,
+              providerName: prov.name,
+              productName: prod.productName,
+              indicativePremiumIdr: prod.indicativePremiumIdr,
+              website: prov.website,
+            }))
+        )
+        .sort((a, b) => a.indicativePremiumIdr - b.indicativePremiumIdr)
+        .slice(0, 3);
+      gaps.push({
+        type: "education",
+        priority: "low",
+        recommendation:
+          "Education plan berbasis tabarru' untuk dana pendidikan anak. Bisa sambil nabung + dapat life cover embedded.",
+        providers: eduOptions,
+      });
+    }
+
+    // Total indicative monthly premium for shariah coverage
+    const totalIndicativeShariahPremium = gaps.reduce(
+      (sum, gap) => sum + (gap.providers[0]?.indicativePremiumIdr ?? 0),
+      0
+    );
+
+    // Detect riba-exposure warning
+    const ribaWarnings: string[] = [];
+    if (conventionalPolicyCount > 0) {
+      ribaWarnings.push(
+        `Lo punya ${conventionalPolicyCount} polis konvensional (isShariahCompliant=false). Review apakah ada unsur riba/gharar — pertimbangkan migrasi ke shariah-compliant.`
+      );
+    }
+
+    return {
+      totalCoverage: {
+        ...totalCoverage,
+        shariah: totalCoverageShariah,
+      },
+      monthlyPremium: {
+        total: monthlyPremium,
+        shariah: monthlyPremiumShariah,
+        conventional: monthlyPremium - monthlyPremiumShariah,
+      },
+      conventionalPolicyCount,
+      upcomingPremiums: [],
+      gaps,
+      ribaWarnings,
+      shariahCoverageGap: {
+        indicativeMonthlyPremiumForGaps: totalIndicativeShariahPremium,
+        suggestedBudgetPct: "5-10% of monthly income",
+        note: "Total budget shariah insurance ideal 5-10% income (Rp 800rb-1.5jt/bulan).",
+      },
+    };
   },
 };
 

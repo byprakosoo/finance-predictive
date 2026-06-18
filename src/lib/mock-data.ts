@@ -546,7 +546,25 @@ export const financialGoalsSeed: FinancialGoal[] = [
 export const goalAllocationsSeed: GoalAllocation[] = [];
 
 export const insurancePoliciesSeed: InsurancePolicy[] = [
-  { id: "ins-bpjs", userId: DEMO_USER, policyType: "health", provider: "BPJS Kesehatan", policyNumber: "0001-2345-6789", coverageAmount: 0, currency: "IDR", premiumAmount: 150000, premiumFrequency: "monthly", startDate: "2024-01-01T00:00:00Z", expiryDate: null, isActive: true, beneficiary: "Keluarga" },
+  {
+    id: "ins-bpjs",
+    userId: DEMO_USER,
+    policyType: "health",
+    provider: "BPJS Kesehatan",
+    providerId: null,
+    policyNumber: "0001-2345-6789",
+    coverageAmount: 0,
+    currency: "IDR",
+    premiumAmount: 150000,
+    premiumFrequency: "monthly",
+    startDate: "2024-01-01T00:00:00Z",
+    expiryDate: null,
+    isActive: true,
+    isShariahCompliant: true,
+    akadType: "tabarru",
+    beneficiary: "Keluarga",
+    notes: "BPJS pakai akad gotong royong (tabarru'), patuh syariah",
+  },
 ];
 
 export const netWorthSnapshotsSeed: NetWorthSnapshot[] = [

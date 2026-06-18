@@ -242,6 +242,8 @@ export type PremiumFrequency =
   | "annual"
   | "one_time";
 
+export type ShariahAkadType = "tabarru" | "tijarah" | "mixed";
+
 export type PersonalAsset = {
   id: string;
   userId: string;
@@ -330,6 +332,7 @@ export type InsurancePolicy = {
   userId: string;
   policyType: PolicyType;
   provider: string;
+  providerId?: string | null; // matches shariahProviders[].id when shariah-compliant
   policyNumber?: string | null;
   coverageAmount: number;
   currency: Currency;
@@ -339,6 +342,9 @@ export type InsurancePolicy = {
   expiryDate?: string | null;
   beneficiary?: string | null;
   isActive: boolean;
+  akadType?: ShariahAkadType | null;
+  isShariahCompliant: boolean;
+  notes?: string | null;
 };
 
 export type NetWorthSnapshot = {
