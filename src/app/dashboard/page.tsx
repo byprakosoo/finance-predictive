@@ -1,13 +1,16 @@
 import Link from "next/link";
 import {
-  BarChart3,
   Bell,
+  Binoculars,
   CircleCheck,
+  FileText,
   Gauge,
   Globe2,
   HelpCircle,
+  LayoutDashboard,
   LineChart,
   LogOut,
+  Network,
   Play,
   Settings,
   Shield,
@@ -15,6 +18,7 @@ import {
   SlidersHorizontal,
   TrendingUp,
   UserRound,
+  Users,
   WalletCards,
 } from "lucide-react";
 
@@ -124,11 +128,14 @@ function ConfidenceRing({ value, compact = false }: { value: number; compact?: b
 
 function DesktopSidebar() {
   const nav = [
-    { href: "/dashboard", icon: BarChart3, label: "Dashboard", active: true },
-    { href: "/alpha-hunter", icon: LineChart, label: "Market Alpha" },
-    { href: "/morning-brief", icon: Globe2, label: "Macro View" },
-    { href: "/alerts", icon: Gauge, label: "Sentiment" },
-    { href: "/settings", icon: Shield, label: "Risk Guard" },
+    { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard", active: true },
+    { href: "/portfolio", icon: WalletCards, label: "Portfolio" },
+    { href: "/wallets", icon: Network, label: "Wallets" },
+    { href: "/entities", icon: Users, label: "Entities" },
+    { href: "/alerts", icon: Bell, label: "Alerts" },
+    { href: "/alpha-hunter", icon: Binoculars, label: "Alpha Hunter" },
+    { href: "/morning-brief", icon: FileText, label: "Morning Brief" },
+    { href: "/settings", icon: Settings, label: "Settings" },
   ];
 
   return (
@@ -138,7 +145,7 @@ function DesktopSidebar() {
           <UserRound className="h-7 w-7" />
         </div>
         <div>
-          <p className="font-mono text-sm font-bold leading-5 tracking-[0.12em] text-cyan-300">Institutional<br />Terminal</p>
+          <p className="font-mono text-sm font-bold leading-5 tracking-[0.12em] text-cyan-300">Finance<br />Predictive</p>
           <p className="mt-2 font-mono text-xs tracking-[0.18em] text-slate-300">Live Alpha Feed</p>
         </div>
       </div>
