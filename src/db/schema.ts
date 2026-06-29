@@ -1,7 +1,10 @@
 import {
+  boolean,
   decimal,
   index,
   int,
+  json,
+  mysqlEnum,
   mysqlTable,
   text,
   timestamp,
@@ -202,4 +205,192 @@ export const bitcoinUtxos = mysqlTable("bitcoin_utxos", {
   status: varchar("status", { length: 16 }).notNull(),
 }, (table) => ({
   outpointIdx: uniqueIndex("bitcoin_utxos_outpoint_idx").on(table.txid, table.vout),
+}));
+
+// ============================================================================
+// PERSONAL FINANCE EXTENSION
+// Multi-asset portfolio, cash flow, goals, insurance, net worth, rebalancing.
+// Pattern matches existing tables: varchar(191) ids, BetterAuth userId refs.
+// ============================================================================
+
+export const expenseCategories = mysqlTable("expense_categories", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  userId: varchar("user_id", { length: 191 }).notNull().references(() => users.id),
+  name: varchar("name", { length: 100 }).notNull(),
+  parentId: varchar("parent_id", { length: 191 }),
+  icon: varchar("icon", { length: 50 }),
+  color: varchar("color", { length: 20 }),
+  budgetLimit: decimal("budget_limit", { precision: 20, scale: 2 }),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdx: index("expense_categories_user_idx").on(table.userId),
+}));
+
+export const personalAssets = mysqlTable("personal_assets", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  userId: varchar("user_id", { length: 191 }).notNull().references(() => users.id),
+  name: varchar("name", { length: 200 }).notNull(),
+  symbol: varchar("symbol", { length: 50 }),
+  assetType: mysqlEnum("asset_type", [
+    "cash", "rpu", "bond", "stock_idx", "stock_us",
+    "gold", "crypto", "mutual_fund", "property", "other",
+  ]).notNull(),
+  quantity: decimal("quantity", { precision: 20, scale: 8 }).notNull(),
+  avgBuyPrice: decimal("avg_buy_price", { precision: 20, scale: 8 }),
+  currentPrice: decimal("current_price", { precision: 20, scale: 8 }),
+  currency: mysqlEnum("currency", ["IDR", "USD"]).notNull().default("IDR"),
+  platform: varchar("platform", { length: 100 }),
+  notes: text("notes"),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdx: index("personal_assets_user_idx").on(table.userId),
+  typeIdx: index("personal_assets_type_idx").on(table.assetType),
+}));
+
+export const assetTransactions = mysqlTable("asset_transactions", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  userId: varchar("user_id", { length: 191 }).notNull().references(() => users.id),
+  assetId: varchar("asset_id", { length: 191 }).notNull().references(() => personalAssets.id),
+  type: mysqlEnum("type", [
+    "buy", "sell", "dividend", "interest",
+    "split", "merge", "transfer_in", "transfer_out",
+  ]).notNull(),
+  quantity: decimal("quantity", { precision: 20, scale: 8 }).notNull(),
+  pricePerUnit: decimal("price_per_unit", { precision: 20, scale: 8 }).notNull(),
+  totalAmount: decimal("total_amount", { precision: 20, scale: 2 }).notNull(),
+  fees: decimal("fees", { precision: 20, scale: 2 }).default("0").notNull(),
+  currency: mysqlEnum("currency", ["IDR", "USD"]).notNull(),
+  transactionDate: timestamp("transaction_date").notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  userIdx: index("asset_transactions_user_idx").on(table.userId),
+  assetIdx: index("asset_transactions_asset_idx").on(table.assetId),
+  dateIdx: index("asset_transactions_date_idx").on(table.transactionDate),
+}));
+
+export const cashFlowEntries = mysqlTable("cash_flow_entries", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  userId: varchar("user_id", { length: 191 }).notNull().references(() => users.id),
+  entryType: mysqlEnum("entry_type", ["income", "expense"]).notNull(),
+  categoryId: varchar("category_id", { length: 191 }),
+  amount: decimal("amount", { precision: 20, scale: 2 }).notNull(),
+  currency: mysqlEnum("currency", ["IDR", "USD"]).notNull().default("IDR"),
+  paymentMethod: varchar("payment_method", { length: 50 }),
+  description: varchar("description", { length: 500 }),
+  isRecurring: boolean("is_recurring").default(false).notNull(),
+  recurringFrequency: mysqlEnum("recurring_frequency", [
+    "daily", "weekly", "monthly", "quarterly", "yearly",
+  ]),
+  transactionDate: timestamp("transaction_date").notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdx: index("cash_flow_user_idx").on(table.userId),
+  typeIdx: index("cash_flow_type_idx").on(table.entryType),
+  dateIdx: index("cash_flow_date_idx").on(table.transactionDate),
+  userDateIdx: index("cash_flow_user_date_idx").on(table.userId, table.transactionDate),
+}));
+
+export const financialGoals = mysqlTable("financial_goals", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  userId: varchar("user_id", { length: 191 }).notNull().references(() => users.id),
+  name: varchar("name", { length: 200 }).notNull(),
+  type: mysqlEnum("type", [
+    "hajj", "education", "ev", "emergency", "retirement",
+    "home", "wedding", "travel", "other",
+  ]).notNull(),
+  targetAmount: decimal("target_amount", { precision: 20, scale: 2 }).notNull(),
+  currentAmount: decimal("current_amount", { precision: 20, scale: 2 }).default("0").notNull(),
+  currency: mysqlEnum("currency", ["IDR", "USD"]).notNull().default("IDR"),
+  deadline: timestamp("deadline"),
+  priority: mysqlEnum("priority", ["low", "medium", "high", "critical"]).default("medium").notNull(),
+  status: mysqlEnum("status", ["active", "paused", "completed", "cancelled"]).default("active").notNull(),
+  description: text("description"),
+  icon: varchar("icon", { length: 50 }),
+  color: varchar("color", { length: 20 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  completedAt: timestamp("completed_at"),
+}, (table) => ({
+  userIdx: index("financial_goals_user_idx").on(table.userId),
+  typeIdx: index("financial_goals_type_idx").on(table.type),
+  statusIdx: index("financial_goals_status_idx").on(table.status),
+}));
+
+export const goalAllocations = mysqlTable("goal_allocations", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  goalId: varchar("goal_id", { length: 191 }).notNull().references(() => financialGoals.id),
+  assetId: varchar("asset_id", { length: 191 }).notNull().references(() => personalAssets.id),
+  allocatedAmount: decimal("allocated_amount", { precision: 20, scale: 2 }).notNull(),
+  allocationDate: timestamp("allocation_date").defaultNow().notNull(),
+  notes: text("notes"),
+}, (table) => ({
+  goalIdx: index("goal_allocations_goal_idx").on(table.goalId),
+  assetIdx: index("goal_allocations_asset_idx").on(table.assetId),
+  goalAssetIdx: uniqueIndex("goal_allocations_goal_asset_unique").on(table.goalId, table.assetId),
+}));
+
+export const insurancePolicies = mysqlTable("insurance_policies", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  userId: varchar("user_id", { length: 191 }).notNull().references(() => users.id),
+  policyType: mysqlEnum("policy_type", [
+    "life", "health", "critical_illness", "disability", "auto", "property", "other",
+  ]).notNull(),
+  provider: varchar("provider", { length: 200 }).notNull(),
+  providerId: varchar("provider_id", { length: 100 }),
+  policyNumber: varchar("policy_number", { length: 100 }),
+  coverageAmount: decimal("coverage_amount", { precision: 20, scale: 2 }).notNull(),
+  currency: mysqlEnum("currency", ["IDR", "USD"]).notNull().default("IDR"),
+  premiumAmount: decimal("premium_amount", { precision: 20, scale: 2 }).notNull(),
+  premiumFrequency: mysqlEnum("premium_frequency", [
+    "monthly", "quarterly", "semi_annual", "annual", "one_time",
+  ]).notNull(),
+  startDate: timestamp("start_date").notNull(),
+  expiryDate: timestamp("expiry_date"),
+  beneficiary: varchar("beneficiary", { length: 200 }),
+  isActive: boolean("is_active").default(true).notNull(),
+  akadType: mysqlEnum("akad_type", ["tabarru", "tijarah", "mixed"]),
+  isShariahCompliant: boolean("is_shariah_compliant").default(false).notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdx: index("insurance_policies_user_idx").on(table.userId),
+  typeIdx: index("insurance_policies_type_idx").on(table.policyType),
+}));
+
+export const netWorthSnapshots = mysqlTable("net_worth_snapshots", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  userId: varchar("user_id", { length: 191 }).notNull().references(() => users.id),
+  snapshotDate: timestamp("snapshot_date").notNull(),
+  totalAssets: decimal("total_assets", { precision: 20, scale: 2 }).notNull(),
+  totalLiabilities: decimal("total_liabilities", { precision: 20, scale: 2 }).default("0").notNull(),
+  netWorth: decimal("net_worth", { precision: 20, scale: 2 }).notNull(),
+  breakdownJson: json("breakdown_json"),
+  currency: mysqlEnum("currency", ["IDR", "USD"]).notNull().default("IDR"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  userIdx: index("net_worth_snapshots_user_idx").on(table.userId),
+  dateIdx: index("net_worth_snapshots_date_idx").on(table.snapshotDate),
+}));
+
+export const rebalancingRules = mysqlTable("rebalancing_rules", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  userId: varchar("user_id", { length: 191 }).notNull().references(() => users.id),
+  assetType: varchar("asset_type", { length: 50 }).notNull(),
+  targetPct: decimal("target_pct", { precision: 5, scale: 2 }).notNull(),
+  thresholdPct: decimal("threshold_pct", { precision: 5, scale: 2 }).default("5.00").notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdx: index("rebalancing_rules_user_idx").on(table.userId),
+  userTypeIdx: uniqueIndex("rebalancing_rules_user_type_unique").on(table.userId, table.assetType),
 }));

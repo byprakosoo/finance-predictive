@@ -181,3 +181,221 @@ export type IntelligenceAlert = {
   timestamp: string;
   target: string;
 };
+
+// ============================================================================
+// PERSONAL FINANCE TYPES
+// ============================================================================
+
+export type AssetType =
+  | "cash"
+  | "rpu"
+  | "bond"
+  | "stock_idx"
+  | "stock_us"
+  | "gold"
+  | "crypto"
+  | "mutual_fund"
+  | "property"
+  | "other";
+
+export type TransactionType =
+  | "buy"
+  | "sell"
+  | "dividend"
+  | "interest"
+  | "split"
+  | "merge"
+  | "transfer_in"
+  | "transfer_out";
+
+export type Currency = "IDR" | "USD";
+
+export type RecurringFrequency = "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
+
+export type GoalType =
+  | "hajj"
+  | "education"
+  | "ev"
+  | "emergency"
+  | "retirement"
+  | "home"
+  | "wedding"
+  | "travel"
+  | "other";
+
+export type GoalPriority = "low" | "medium" | "high" | "critical";
+export type GoalStatus = "active" | "paused" | "completed" | "cancelled";
+
+export type PolicyType =
+  | "life"
+  | "health"
+  | "critical_illness"
+  | "disability"
+  | "auto"
+  | "property"
+  | "other";
+
+export type PremiumFrequency =
+  | "monthly"
+  | "quarterly"
+  | "semi_annual"
+  | "annual"
+  | "one_time";
+
+export type ShariahAkadType = "tabarru" | "tijarah" | "mixed";
+
+export type PersonalAsset = {
+  id: string;
+  userId: string;
+  name: string;
+  symbol?: string | null;
+  assetType: AssetType;
+  quantity: number;
+  avgBuyPrice?: number | null;
+  currentPrice?: number | null;
+  currency: Currency;
+  platform?: string | null;
+  notes?: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type AssetTransactionRecord = {
+  id: string;
+  userId: string;
+  assetId: string;
+  type: TransactionType;
+  quantity: number;
+  pricePerUnit: number;
+  totalAmount: number;
+  fees: number;
+  currency: Currency;
+  transactionDate: string;
+  notes?: string | null;
+  createdAt: string;
+};
+
+export type ExpenseCategory = {
+  id: string;
+  userId: string;
+  name: string;
+  parentId?: string | null;
+  icon?: string | null;
+  color?: string | null;
+  budgetLimit?: number | null;
+  isActive: boolean;
+};
+
+export type CashFlowEntry = {
+  id: string;
+  userId: string;
+  entryType: "income" | "expense";
+  categoryId?: string | null;
+  amount: number;
+  currency: Currency;
+  paymentMethod?: string | null;
+  description?: string | null;
+  isRecurring: boolean;
+  recurringFrequency?: RecurringFrequency | null;
+  transactionDate: string;
+  notes?: string | null;
+};
+
+export type FinancialGoal = {
+  id: string;
+  userId: string;
+  name: string;
+  type: GoalType;
+  targetAmount: number;
+  currentAmount: number;
+  currency: Currency;
+  deadline?: string | null;
+  priority: GoalPriority;
+  status: GoalStatus;
+  description?: string | null;
+  icon?: string | null;
+  color?: string | null;
+  completedAt?: string | null;
+};
+
+export type GoalAllocation = {
+  id: string;
+  goalId: string;
+  assetId: string;
+  allocatedAmount: number;
+  allocationDate: string;
+};
+
+export type InsurancePolicy = {
+  id: string;
+  userId: string;
+  policyType: PolicyType;
+  provider: string;
+  providerId?: string | null; // matches shariahProviders[].id when shariah-compliant
+  policyNumber?: string | null;
+  coverageAmount: number;
+  currency: Currency;
+  premiumAmount: number;
+  premiumFrequency: PremiumFrequency;
+  startDate: string;
+  expiryDate?: string | null;
+  beneficiary?: string | null;
+  isActive: boolean;
+  akadType?: ShariahAkadType | null;
+  isShariahCompliant: boolean;
+  notes?: string | null;
+};
+
+export type NetWorthSnapshot = {
+  id: string;
+  userId: string;
+  snapshotDate: string;
+  totalAssets: number;
+  totalLiabilities: number;
+  netWorth: number;
+  breakdownJson?: Record<string, number> | null;
+  currency: Currency;
+};
+
+export type RebalancingRule = {
+  id: string;
+  userId: string;
+  assetType: AssetType;
+  targetPct: number;
+  thresholdPct: number;
+  isActive: boolean;
+};
+
+export type RebalancingDeviation = {
+  assetType: AssetType;
+  current: number;
+  target: number;
+  deviation: number;
+  action: "trim" | "add" | "hold";
+};
+
+export type RebalancingStatus = {
+  currentAllocation: Record<string, number>;
+  targetAllocation: Record<string, number>;
+  totalValueIdr: number;
+  deviations: RebalancingDeviation[];
+  alerts: Array<{
+    assetType: AssetType;
+    severity: "low" | "medium" | "high";
+    message: string;
+  }>;
+};
+
+export type CashFlowSummary = {
+  totalIncome: number;
+  totalExpense: number;
+  netCashFlow: number;
+  savingsRate: number;
+  topCategories: Array<{
+    categoryId: string | null;
+    name: string;
+    amount: number;
+    pctOfExpense: number;
+  }>;
+};

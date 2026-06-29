@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type { ZodTypeAny, z } from "zod";
 import { ZodError } from "zod";
 
 export function ok<T>(data: T, init?: ResponseInit) {
@@ -21,7 +22,10 @@ export function validationError(error: ZodError) {
   return fail("Invalid request body", 422, error.flatten());
 }
 
-export async function parseJson<T>(request: Request, schema: { safeParse: (value: unknown) => { success: true; data: T } | { success: false; error: ZodError } }) {
+export async function parseJson<T extends ZodTypeAny>(
+  request: Request,
+  schema: T
+): Promise<{ data: z.infer<T> | null; response: NextResponse | null }> {
   const body = await request.json().catch(() => null);
   const parsed = schema.safeParse(body);
 
@@ -29,5 +33,5 @@ export async function parseJson<T>(request: Request, schema: { safeParse: (value
     return { data: null, response: validationError(parsed.error) };
   }
 
-  return { data: parsed.data, response: null };
+  return { data: parsed.data as z.infer<T>, response: null };
 }
