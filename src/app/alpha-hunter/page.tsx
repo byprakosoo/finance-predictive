@@ -33,12 +33,12 @@ export default function AlphaHunterPage() {
           <CardContent>
             <div className="space-y-3">
               {watchlist.map((item) => (
-                <div key={item.id} className="rounded-md border border-border p-3">
+                <div key={item.id} className="rounded-md border border-slate-700 p-3">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-slate-950">{item.name} <span className="text-muted-foreground">{item.symbol}</span></p>
+                    <p className="text-sm font-medium text-slate-100">{item.name} <span className="text-slate-400">{item.symbol}</span></p>
                     <RiskBadge risk={item.alphaScore > 80 ? "MEDIUM" : "LOW"} />
                   </div>
-                  <p className="mt-2 text-xs leading-5 text-muted-foreground">{item.rationale}</p>
+                  <p className="mt-2 text-xs leading-5 text-slate-400">{item.rationale}</p>
                 </div>
               ))}
             </div>

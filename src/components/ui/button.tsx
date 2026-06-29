@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 
 const variants = {
-  primary: "bg-primary text-primary-foreground hover:bg-teal-700",
-  secondary: "border border-border bg-white text-slate-800 hover:bg-slate-50",
-  ghost: "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
-  danger: "border border-rose-200 bg-white text-rose-700 hover:bg-rose-50",
+  primary: "border border-cyan-200/20 bg-cyan-500 text-slate-100 shadow-[0_0_28px_rgba(6,182,212,0.18)] hover:bg-cyan-300",
+  secondary: "border border-slate-600 bg-slate-800 text-slate-100 hover:border-cyan-300 hover:text-cyan-300",
+  ghost: "text-slate-300 hover:bg-slate-800 hover:text-cyan-300",
+  danger: "border border-rose-300/30 bg-rose-300/10 text-rose-200 hover:bg-rose-300/20",
 };
 
 export function Button({
@@ -20,7 +20,7 @@ export function Button({
   return (
     <button
       className={cn(
-        "focus-ring inline-flex items-center justify-center gap-2 rounded-md font-medium transition",
+        "focus-ring inline-flex items-center justify-center gap-2 rounded-md font-mono font-bold transition",
         size === "default" && "h-10 px-4 text-sm",
         size === "sm" && "h-8 px-3 text-xs",
         size === "icon" && "h-9 w-9",

@@ -19,9 +19,9 @@ export function HoldingsTable({
 }) {
   if (holdings.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-border p-8 text-center">
-        <p className="font-medium text-slate-950">No holdings yet</p>
-        <p className="mt-2 text-sm text-muted-foreground">Add your first crypto holding to calculate value and signals.</p>
+      <div className="rounded-lg border border-dashed border-slate-700 p-8 text-center">
+        <p className="font-medium text-slate-100">No holdings yet</p>
+        <p className="mt-2 text-sm text-slate-400">Add your first crypto holding to calculate value and signals.</p>
       </div>
     );
   }
@@ -29,7 +29,7 @@ export function HoldingsTable({
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[920px] text-left text-sm">
-        <thead className="border-b border-border bg-slate-50 text-xs uppercase text-muted-foreground">
+        <thead className="border-b border-slate-700 bg-slate-800 text-xs uppercase text-slate-400">
           <tr>
             <th className="px-4 py-3 font-medium">Asset</th>
             <th className="px-4 py-3 font-medium">Quantity</th>
@@ -42,7 +42,7 @@ export function HoldingsTable({
             <th className="px-4 py-3 font-medium">Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border bg-white">
+        <tbody className="divide-y divide-border bg-slate-900/80">
           {holdings.map((holding) => {
             const currentValue = holding.quantity * holding.currentPrice;
             const invested = holding.quantity * holding.averageBuyPrice;
@@ -53,8 +53,8 @@ export function HoldingsTable({
             return (
               <tr key={holding.id}>
                 <td className="px-4 py-4">
-                  <div className="font-medium text-slate-950">{holding.name}</div>
-                  <div className="text-xs text-muted-foreground">{holding.symbol}</div>
+                  <div className="font-medium text-slate-100">{holding.name}</div>
+                  <div className="text-xs text-slate-400">{holding.symbol}</div>
                 </td>
                 <td className="px-4 py-4">{formatNumber(holding.quantity)}</td>
                 <td className="px-4 py-4">{formatCurrency(holding.averageBuyPrice)}</td>

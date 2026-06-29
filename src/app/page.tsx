@@ -46,7 +46,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-white/10 bg-white/8 p-4 shadow-2xl">
+          <div className="rounded-lg border border-white/10 bg-slate-900/80/8 p-4 shadow-2xl">
             <div className="grid gap-3">
               {[
                 ["Total value", "$67,271.40", "+3.77% all-time"],
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
         <div className="grid gap-3 pb-4 sm:grid-cols-3">
           {featureCards.map(({ icon: Icon, label }) => (
-            <div key={label} className="flex items-center gap-3 rounded-md border border-white/10 bg-white/5 p-4 text-sm text-slate-200">
+            <div key={label} className="flex items-center gap-3 rounded-md border border-white/10 bg-slate-900/80/5 p-4 text-sm text-slate-200">
               <Icon className="h-4 w-4 text-teal-300" />
               {label}
             </div>

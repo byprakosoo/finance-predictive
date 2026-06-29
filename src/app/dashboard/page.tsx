@@ -84,7 +84,7 @@ function StatusBadge() {
 
 function RunSignalButton({ className = "" }: { className?: string }) {
   return (
-    <Link href="/alpha-hunter" className={`inline-flex items-center justify-center gap-3 rounded-md border border-cyan-200/20 bg-cyan-500 px-6 py-3 font-mono text-base font-bold text-slate-950 shadow-[0_0_28px_rgba(6,182,212,0.25)] transition hover:bg-cyan-300 ${className}`}>
+    <Link href="/alpha-hunter" className={`inline-flex items-center justify-center gap-3 rounded-md border border-cyan-200/20 bg-cyan-500 px-6 py-3 font-mono text-base font-bold text-slate-100 shadow-[0_0_28px_rgba(6,182,212,0.25)] transition hover:bg-cyan-300 ${className}`}>
       <Play className="h-4 w-4" />
       Run Signal
     </Link>
@@ -353,7 +353,7 @@ function MobileBottomNav() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-4 border-t border-slate-700 bg-slate-800 px-6 py-4 xl:hidden">
       {nav.map(({ href, icon: Icon, label, active }) => (
-        <Link key={label} href={href} className={`flex flex-col items-center justify-center gap-1 rounded-lg py-2 font-mono text-sm transition ${active ? "bg-cyan-500 text-slate-950" : "text-slate-300 hover:text-cyan-300"}`}>
+        <Link key={label} href={href} className={`flex flex-col items-center justify-center gap-1 rounded-lg py-2 font-mono text-sm transition ${active ? "bg-cyan-500 text-slate-100" : "text-slate-300 hover:text-cyan-300"}`}>
           <Icon className="h-6 w-6" />
           <span>{label}</span>
         </Link>

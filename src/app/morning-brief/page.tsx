@@ -30,9 +30,9 @@ export default function MorningBriefPage() {
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
             {morningBrief.sections.map((section) => (
-              <section key={section.title} className="rounded-md border border-border p-4">
-                <h2 className="text-sm font-semibold text-slate-950">{section.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">{section.body}</p>
+              <section key={section.title} className="rounded-md border border-slate-700 p-4">
+                <h2 className="text-sm font-semibold text-slate-100">{section.title}</h2>
+                <p className="mt-3 text-sm leading-6 text-slate-400">{section.body}</p>
               </section>
             ))}
             <section className="rounded-md border border-rose-200 bg-rose-50 p-4">

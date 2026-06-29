@@ -124,30 +124,30 @@ export function HoldingManager({
 
       {open ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4">
-          <div className="w-full max-w-lg rounded-lg border border-border bg-white shadow-xl">
-            <div className="flex items-center justify-between border-b border-border px-5 py-4">
-              <h2 className="text-base font-semibold text-slate-950">{editing ? "Edit holding" : "Add holding"}</h2>
+          <div className="w-full max-w-lg rounded-lg border border-slate-700 bg-slate-900/80 shadow-xl">
+            <div className="flex items-center justify-between border-b border-slate-700 px-5 py-4">
+              <h2 className="text-base font-semibold text-slate-100">{editing ? "Edit holding" : "Add holding"}</h2>
               <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close dialog">
                 <X className="h-4 w-4" />
               </Button>
             </div>
             <form className="space-y-4 p-5" onSubmit={form.handleSubmit(submit)}>
               <Field label="Coin name" error={form.formState.errors.name?.message}>
-                <input className="h-10 w-full rounded-md border border-border px-3 text-sm" {...form.register("name")} placeholder="Bitcoin" />
+                <input className="h-10 w-full rounded-md border border-slate-700 px-3 text-sm" {...form.register("name")} placeholder="Bitcoin" />
               </Field>
               <Field label="Symbol" error={form.formState.errors.symbol?.message}>
-                <input className="h-10 w-full rounded-md border border-border px-3 text-sm uppercase" {...form.register("symbol")} placeholder="BTC" />
+                <input className="h-10 w-full rounded-md border border-slate-700 px-3 text-sm uppercase" {...form.register("symbol")} placeholder="BTC" />
               </Field>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Quantity" error={form.formState.errors.quantity?.message}>
-                  <input className="h-10 w-full rounded-md border border-border px-3 text-sm" type="number" step="any" {...form.register("quantity")} />
+                  <input className="h-10 w-full rounded-md border border-slate-700 px-3 text-sm" type="number" step="any" {...form.register("quantity")} />
                 </Field>
                 <Field label="Average buy price" error={form.formState.errors.averageBuyPrice?.message}>
-                  <input className="h-10 w-full rounded-md border border-border px-3 text-sm" type="number" step="any" {...form.register("averageBuyPrice")} />
+                  <input className="h-10 w-full rounded-md border border-slate-700 px-3 text-sm" type="number" step="any" {...form.register("averageBuyPrice")} />
                 </Field>
               </div>
               <Field label="Notes" error={form.formState.errors.notes?.message}>
-                <textarea className="min-h-20 w-full rounded-md border border-border px-3 py-2 text-sm" {...form.register("notes")} />
+                <textarea className="min-h-20 w-full rounded-md border border-slate-700 px-3 py-2 text-sm" {...form.register("notes")} />
               </Field>
               <div className="flex justify-end gap-2">
                 <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
@@ -174,7 +174,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-sm font-medium text-slate-800">{label}</span>
+      <span className="mb-1 block text-sm font-medium text-slate-200">{label}</span>
       {children}
       {error ? <span className="mt-1 block text-xs text-rose-700">{error}</span> : null}
     </label>
