@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   BarChart3,
   Bell,
@@ -83,10 +84,10 @@ function StatusBadge() {
 
 function RunSignalButton({ className = "" }: { className?: string }) {
   return (
-    <button className={`inline-flex items-center justify-center gap-3 rounded-md border border-cyan-200/20 bg-cyan-500 px-6 py-3 font-mono text-base font-bold text-slate-950 shadow-[0_0_28px_rgba(6,182,212,0.25)] transition hover:bg-cyan-300 ${className}`}>
+    <Link href="/alpha-hunter" className={`inline-flex items-center justify-center gap-3 rounded-md border border-cyan-200/20 bg-cyan-500 px-6 py-3 font-mono text-base font-bold text-slate-950 shadow-[0_0_28px_rgba(6,182,212,0.25)] transition hover:bg-cyan-300 ${className}`}>
       <Play className="h-4 w-4" />
       Run Signal
-    </button>
+    </Link>
   );
 }
 
@@ -123,11 +124,11 @@ function ConfidenceRing({ value, compact = false }: { value: number; compact?: b
 
 function DesktopSidebar() {
   const nav = [
-    { icon: BarChart3, label: "Dashboard", active: true },
-    { icon: LineChart, label: "Market Alpha" },
-    { icon: Globe2, label: "Macro View" },
-    { icon: Gauge, label: "Sentiment" },
-    { icon: Shield, label: "Risk Guard" },
+    { href: "/dashboard", icon: BarChart3, label: "Dashboard", active: true },
+    { href: "/alpha-hunter", icon: LineChart, label: "Market Alpha" },
+    { href: "/morning-brief", icon: Globe2, label: "Macro View" },
+    { href: "/alerts", icon: Gauge, label: "Sentiment" },
+    { href: "/settings", icon: Shield, label: "Risk Guard" },
   ];
 
   return (
@@ -143,19 +144,19 @@ function DesktopSidebar() {
       </div>
 
       <nav className="space-y-4">
-        {nav.map(({ icon: Icon, label, active }) => (
-          <div key={label} className={`flex items-center gap-4 rounded-md px-4 py-4 text-lg ${active ? "border-r-4 border-cyan-300 bg-slate-700/70 text-cyan-300" : "text-slate-300"}`}>
+        {nav.map(({ href, icon: Icon, label, active }) => (
+          <Link key={label} href={href} className={`flex items-center gap-4 rounded-md px-4 py-4 text-lg transition hover:bg-slate-800 hover:text-cyan-300 ${active ? "border-r-4 border-cyan-300 bg-slate-700/70 text-cyan-300" : "text-slate-300"}`}>
             <Icon className="h-6 w-6" />
             <span>{label}</span>
-          </div>
+          </Link>
         ))}
       </nav>
 
       <div className="mt-28 space-y-12">
         <RunSignalButton className="w-full py-4 text-sm" />
         <div className="border-t border-slate-700/60 pt-10 text-slate-300">
-          <div className="mb-10 flex items-center gap-4 text-lg"><HelpCircle /> Support</div>
-          <div className="flex items-center gap-4 text-lg"><LogOut /> Sign Out</div>
+          <Link href="/settings" className="mb-10 flex items-center gap-4 text-lg transition hover:text-cyan-300"><HelpCircle /> Support</Link>
+          <Link href="/" className="flex items-center gap-4 text-lg transition hover:text-cyan-300"><LogOut /> Sign Out</Link>
         </div>
       </div>
     </aside>
@@ -163,19 +164,27 @@ function DesktopSidebar() {
 }
 
 function DesktopHeader() {
+  const nav = [
+    { href: "/dashboard", label: "Signals", active: true },
+    { href: "/portfolio", label: "Portfolio" },
+    { href: "/alpha-hunter", label: "Analytics" },
+    { href: "/morning-brief", label: "History" },
+  ];
+
   return (
     <header className="hidden h-16 items-center justify-between border-b border-slate-700/40 px-8 xl:flex">
       <h1 className="text-2xl font-black tracking-tight text-cyan-300">FINANCE-PREDICTIVE</h1>
       <nav className="flex h-full items-center gap-12 text-lg text-slate-300">
-        <span className="flex h-full items-center border-b-2 border-cyan-300 px-2 text-cyan-300">Signals</span>
-        <span>Portfolio</span>
-        <span>Analytics</span>
-        <span>History</span>
+        {nav.map((item) => (
+          <Link key={item.label} href={item.href} className={`flex h-full items-center px-2 transition hover:text-cyan-300 ${item.active ? "border-b-2 border-cyan-300 text-cyan-300" : ""}`}>
+            {item.label}
+          </Link>
+        ))}
       </nav>
       <div className="flex items-center gap-6 text-slate-300">
-        <Bell className="h-6 w-6" />
-        <Settings className="h-7 w-7" />
-        <div className="h-9 w-9 rounded-full border border-cyan-300/20 bg-slate-800" />
+        <Link href="/alerts" aria-label="Alerts" className="transition hover:text-cyan-300"><Bell className="h-6 w-6" /></Link>
+        <Link href="/settings" aria-label="Settings" className="transition hover:text-cyan-300"><Settings className="h-7 w-7" /></Link>
+        <Link href="/settings" aria-label="Profile" className="h-9 w-9 rounded-full border border-cyan-300/20 bg-slate-800 transition hover:border-cyan-300" />
       </div>
     </header>
   );
@@ -336,18 +345,18 @@ function MobilePortfolioAllocation() {
 
 function MobileBottomNav() {
   const nav = [
-    { icon: LineChart, label: "Signals", active: true },
-    { icon: TrendingUp, label: "Market" },
-    { icon: WalletCards, label: "Portfolio" },
-    { icon: Shield, label: "Risk" },
+    { href: "/dashboard", icon: LineChart, label: "Signals", active: true },
+    { href: "/alpha-hunter", icon: TrendingUp, label: "Market" },
+    { href: "/portfolio", icon: WalletCards, label: "Portfolio" },
+    { href: "/settings", icon: Shield, label: "Risk" },
   ];
   return (
     <nav className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-4 border-t border-slate-700 bg-slate-800 px-6 py-4 xl:hidden">
-      {nav.map(({ icon: Icon, label, active }) => (
-        <div key={label} className={`flex flex-col items-center justify-center gap-1 rounded-lg py-2 font-mono text-sm ${active ? "bg-cyan-500 text-slate-950" : "text-slate-300"}`}>
+      {nav.map(({ href, icon: Icon, label, active }) => (
+        <Link key={label} href={href} className={`flex flex-col items-center justify-center gap-1 rounded-lg py-2 font-mono text-sm transition ${active ? "bg-cyan-500 text-slate-950" : "text-slate-300 hover:text-cyan-300"}`}>
           <Icon className="h-6 w-6" />
           <span>{label}</span>
-        </div>
+        </Link>
       ))}
     </nav>
   );
