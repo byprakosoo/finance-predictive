@@ -25,7 +25,9 @@ export function validationError(error: ZodError) {
 export async function parseJson<T extends ZodTypeAny>(
   request: Request,
   schema: T
-): Promise<{ data: z.infer<T> | null; response: NextResponse | null }> {
+): Promise<
+  { data: z.infer<T>; response: null } | { data: null; response: NextResponse }
+> {
   const body = await request.json().catch(() => null);
   const parsed = schema.safeParse(body);
 
