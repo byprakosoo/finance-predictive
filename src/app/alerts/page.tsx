@@ -33,16 +33,16 @@ export default function AlertsPage() {
           <CardContent>
             <div className="space-y-3">
               {watchRules.map((rule) => (
-                <div key={rule.id} className="rounded-md border border-border p-3">
+                <div key={rule.id} className="rounded-md border border-slate-700 p-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h2 className="text-sm font-semibold text-slate-950">{rule.name}</h2>
+                    <h2 className="text-sm font-semibold text-slate-100">{rule.name}</h2>
                     <div className="flex items-center gap-2">
                       {rule.chain !== "ALL" ? <ChainBadge chain={rule.chain} /> : <Badge variant="default">ALL</Badge>}
                       <Badge variant={rule.status === "ACTIVE" ? "positive" : "default"}>{rule.status}</Badge>
                     </div>
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground">{rule.target}</p>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{rule.condition}</p>
+                  <p className="mt-2 text-xs text-slate-400">{rule.target}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-400">{rule.condition}</p>
                   <Button className="mt-3" variant="secondary" size="sm">
                     <Pause className="h-4 w-4" /> Pause
                   </Button>
@@ -57,11 +57,11 @@ export default function AlertsPage() {
           <CardContent>
             <div className="space-y-3">
               {intelligenceAlerts.map((alert) => (
-                <div key={alert.id} className="rounded-md border border-border p-3">
+                <div key={alert.id} className="rounded-md border border-slate-700 p-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <Bell className="h-4 w-4 text-amber-600" />
-                      <h2 className="text-sm font-semibold text-slate-950">{alert.title}</h2>
+                      <h2 className="text-sm font-semibold text-slate-100">{alert.title}</h2>
                     </div>
                     <div className="flex items-center gap-2">
                       <ChainBadge chain={alert.chain} />
@@ -70,8 +70,8 @@ export default function AlertsPage() {
                       </Badge>
                     </div>
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground">{alert.timestamp} · {alert.target}</p>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{alert.detail}</p>
+                  <p className="mt-2 text-xs text-slate-400">{alert.timestamp} · {alert.target}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-400">{alert.detail}</p>
                 </div>
               ))}
             </div>

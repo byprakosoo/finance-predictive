@@ -1,5 +1,5 @@
 import { mockStore } from "@/server/mock-store";
-import { recommendShariahProvider, findShariahProvidersByType } from "@/lib/insurance-providers";
+import { findShariahProvidersByType } from "@/lib/insurance-providers";
 import type { Chain } from "@/lib/types";
 
 // Estimated USD/IDR for live value normalization. Will be replaced by FX service.
@@ -60,7 +60,7 @@ export const personalAssetService = {
   list: (userId: string, filters?: { assetType?: string; platform?: string; isActive?: boolean }) =>
     mockStore.listAssets(userId, filters),
   get: (userId: string, assetId: string) => mockStore.getAsset(userId, assetId),
-  create: (userId: string, input: Parameters<typeof mockStore.addAsset>[0]) =>
+  create: (userId: string, input: Omit<Parameters<typeof mockStore.addAsset>[0], "userId">) =>
     mockStore.addAsset({ ...input, userId }),
   update: (userId: string, assetId: string, input: Parameters<typeof mockStore.updateAsset>[2]) =>
     mockStore.updateAsset(userId, assetId, input),
@@ -92,7 +92,7 @@ export const assetTransactionService = {
     userId: string,
     filters?: { assetId?: string; type?: string; from?: string; to?: string; limit?: number; offset?: number }
   ) => mockStore.listTransactions(userId, filters),
-  create: (userId: string, input: Parameters<typeof mockStore.addTransaction>[0]) =>
+  create: (userId: string, input: Omit<Parameters<typeof mockStore.addTransaction>[0], "userId">) =>
     mockStore.addTransaction({ ...input, userId }),
   delete: (userId: string, txId: string) => mockStore.deleteTransaction(userId, txId),
 };
@@ -102,7 +102,7 @@ export const cashFlowService = {
     userId: string,
     filters?: { entryType?: "income" | "expense"; categoryId?: string; from?: string; to?: string; isRecurring?: boolean; limit?: number; offset?: number }
   ) => mockStore.listCashFlow(userId, filters),
-  create: (userId: string, input: Parameters<typeof mockStore.addCashFlow>[0]) =>
+  create: (userId: string, input: Omit<Parameters<typeof mockStore.addCashFlow>[0], "userId">) =>
     mockStore.addCashFlow({ ...input, userId }),
   update: (userId: string, entryId: string, input: Parameters<typeof mockStore.updateCashFlow>[2]) =>
     mockStore.updateCashFlow(userId, entryId, input),
@@ -148,7 +148,7 @@ export const cashFlowService = {
 
 export const categoryService = {
   list: (userId: string) => mockStore.listCategories(userId),
-  create: (userId: string, input: Parameters<typeof mockStore.addCategory>[0]) =>
+  create: (userId: string, input: Omit<Parameters<typeof mockStore.addCategory>[0], "userId">) =>
     mockStore.addCategory({ ...input, userId }),
   update: (userId: string, categoryId: string, input: Parameters<typeof mockStore.updateCategory>[2]) =>
     mockStore.updateCategory(userId, categoryId, input),
@@ -173,13 +173,13 @@ export const goalService = {
         : null;
     return { ...goal, currentAmount, progressPct, daysToDeadline, monthlyNeeded, allocations };
   },
-  create: (userId: string, input: Parameters<typeof mockStore.addGoal>[0]) =>
+  create: (userId: string, input: Omit<Parameters<typeof mockStore.addGoal>[0], "userId">) =>
     mockStore.addGoal({ ...input, userId }),
   update: (userId: string, goalId: string, input: Parameters<typeof mockStore.updateGoal>[2]) =>
     mockStore.updateGoal(userId, goalId, input),
   delete: (userId: string, goalId: string) => mockStore.deleteGoal(userId, goalId),
 
-  allocate: (userId: string, goalId: string, input: Parameters<typeof mockStore.addAllocation>[0]) => {
+  allocate: (userId: string, goalId: string, input: Omit<Parameters<typeof mockStore.addAllocation>[0], "goalId">) => {
     if (!mockStore.getGoal(userId, goalId)) return null;
     return mockStore.addAllocation({ ...input, goalId });
   },
@@ -188,7 +188,7 @@ export const goalService = {
 
 export const insuranceService = {
   list: (userId: string) => mockStore.listInsurance(userId),
-  create: (userId: string, input: Parameters<typeof mockStore.addInsurance>[0]) =>
+  create: (userId: string, input: Omit<Parameters<typeof mockStore.addInsurance>[0], "userId">) =>
     mockStore.addInsurance({ ...input, userId }),
   update: (userId: string, policyId: string, input: Parameters<typeof mockStore.updateInsurance>[2]) =>
     mockStore.updateInsurance(userId, policyId, input),
@@ -225,7 +225,7 @@ export const insuranceService = {
     // Only flag gaps for active risks user is exposed to.
     const gaps: Array<{
       type: string;
-      priority: "critical" | "high" | "medium";
+      priority: "critical" | "high" | "medium" | "low";
       recommendation: string;
       providers: Array<{ providerId: string; providerName: string; productName: string; indicativePremiumIdr: number; website: string }>;
     }> = [];
@@ -373,7 +373,7 @@ export const netWorthService = {
     const snapshots = mockStore.listNetWorthSnapshots(userId, 1);
     return snapshots[0] ?? null;
   },
-  create: (userId: string, input: Parameters<typeof mockStore.addNetWorthSnapshot>[0]) =>
+  create: (userId: string, input: Omit<Parameters<typeof mockStore.addNetWorthSnapshot>[0], "userId">) =>
     mockStore.addNetWorthSnapshot({ ...input, userId }),
 
   /** Computes a fresh snapshot from current assets. Useful for cron jobs. */
@@ -397,7 +397,7 @@ export const netWorthService = {
 
 export const rebalancingService = {
   listRules: (userId: string) => mockStore.listRebalancingRules(userId),
-  createRule: (userId: string, input: Parameters<typeof mockStore.addRebalancingRule>[0]) =>
+  createRule: (userId: string, input: Omit<Parameters<typeof mockStore.addRebalancingRule>[0], "userId">) =>
     mockStore.addRebalancingRule({ ...input, userId }),
   updateRule: (userId: string, ruleId: string, input: Parameters<typeof mockStore.updateRebalancingRule>[2]) =>
     mockStore.updateRebalancingRule(userId, ruleId, input),
@@ -432,7 +432,7 @@ export const rebalancingService = {
         return {
           assetType: d.assetType,
           severity: severity as "low" | "medium" | "high",
-          message: `${d.assetType.toUpperCase()} allocation ${currentAllocation[d.assetType]?.toFixed(1)}% ${direction} target ${d.targetPct}% by ${Math.abs(d.deviation).toFixed(1)}pp (~Rp ${Math.round(idrDelta).toLocaleString("id-ID")}). Consider ${d.action}.`,
+          message: `${d.assetType.toUpperCase()} allocation ${currentAllocation[d.assetType]?.toFixed(1)}% ${direction} target ${d.target}% by ${Math.abs(d.deviation).toFixed(1)}pp (~Rp ${Math.round(idrDelta).toLocaleString("id-ID")}). Consider ${d.action}.`,
         };
       });
 

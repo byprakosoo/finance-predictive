@@ -17,8 +17,8 @@ export default function SettingsPage() {
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-md bg-slate-900 font-semibold text-white">AI</div>
               <div>
-                <p className="font-medium text-slate-950">Alex Investor</p>
-                <p className="text-sm text-muted-foreground">alex@example.com</p>
+                <p className="font-medium text-slate-100">Alex Investor</p>
+                <p className="text-sm text-slate-400">alex@example.com</p>
               </div>
             </div>
           </CardContent>
@@ -42,8 +42,8 @@ export default function SettingsPage() {
 
 function SettingRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-md border border-border p-3">
-      <span className="text-sm font-medium text-slate-950">{label}</span>
+    <div className="flex items-center justify-between gap-4 rounded-md border border-slate-700 p-3">
+      <span className="text-sm font-medium text-slate-100">{label}</span>
       <Badge variant="default">{value}</Badge>
     </div>
   );

@@ -8,7 +8,7 @@ export function Card({
   className?: string;
 }) {
   return (
-    <section className={cn("rounded-lg border border-border bg-card text-card-foreground shadow-panel", className)}>
+    <section className={cn("rounded-xl border border-slate-700 bg-slate-950/35 text-slate-100 shadow-[0_0_45px_rgba(34,211,238,0.04)]", className)}>
       {children}
     </section>
   );
@@ -24,10 +24,10 @@ export function CardHeader({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-16 flex-wrap items-start justify-between gap-3 border-b border-border px-4 py-4">
+    <div className="flex min-h-16 flex-wrap items-start justify-between gap-3 border-b border-slate-700 px-5 py-5">
       <div>
-        <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
-        {description ? <p className="mt-1 text-xs leading-5 text-muted-foreground">{description}</p> : null}
+        <h2 className="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">{title}</h2>
+        {description ? <p className="mt-2 text-sm leading-6 text-slate-400">{description}</p> : null}
       </div>
       {action}
     </div>
@@ -41,5 +41,5 @@ export function CardContent({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={cn("p-4", className)}>{children}</div>;
+  return <div className={cn("p-5", className)}>{children}</div>;
 }

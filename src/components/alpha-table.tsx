@@ -8,7 +8,7 @@ export function AlphaTable({ candidates }: { candidates: AlphaCandidate[] }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[960px] text-left text-sm">
-        <thead className="border-b border-border bg-slate-50 text-xs uppercase text-muted-foreground">
+        <thead className="border-b border-slate-700 bg-slate-800 text-xs uppercase text-slate-400">
           <tr>
             <th className="px-4 py-3 font-medium">Rank</th>
             <th className="px-4 py-3 font-medium">Asset</th>
@@ -22,13 +22,13 @@ export function AlphaTable({ candidates }: { candidates: AlphaCandidate[] }) {
             <th className="px-4 py-3 font-medium">Action</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border bg-white">
+        <tbody className="divide-y divide-border bg-slate-900/80">
           {candidates.map((candidate) => (
             <tr key={candidate.assetId}>
-              <td className="px-4 py-4 font-semibold text-slate-950">#{candidate.rank}</td>
+              <td className="px-4 py-4 font-semibold text-slate-100">#{candidate.rank}</td>
               <td className="px-4 py-4">
-                <div className="font-medium text-slate-950">{candidate.name}</div>
-                <div className="text-xs text-muted-foreground">{candidate.symbol}</div>
+                <div className="font-medium text-slate-100">{candidate.name}</div>
+                <div className="text-xs text-slate-400">{candidate.symbol}</div>
               </td>
               <td className="px-4 py-4">{formatCurrency(candidate.priceUsd)}</td>
               <td className={candidate.priceChange24h >= 0 ? "px-4 py-4 text-emerald-700" : "px-4 py-4 text-rose-700"}>
@@ -49,7 +49,7 @@ export function AlphaTable({ candidates }: { candidates: AlphaCandidate[] }) {
               <td className="px-4 py-4">
                 <RiskBadge risk={candidate.riskLevel} />
               </td>
-              <td className="max-w-xs px-4 py-4 text-xs leading-5 text-muted-foreground">{candidate.rationale}</td>
+              <td className="max-w-xs px-4 py-4 text-xs leading-5 text-slate-400">{candidate.rationale}</td>
               <td className="px-4 py-4">
                 <Button size="sm" variant={candidate.watched ? "secondary" : "primary"}>
                   {candidate.watched ? <Star className="h-4 w-4" /> : <Plus className="h-4 w-4" />}

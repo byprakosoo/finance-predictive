@@ -9,7 +9,7 @@ export function WalletIntelTable({ wallets }: { wallets: WalletIntelligence[] })
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[920px] text-left text-sm">
-        <thead className="border-b border-border bg-slate-50 text-xs uppercase text-muted-foreground">
+        <thead className="border-b border-slate-700 bg-slate-800 text-xs uppercase text-slate-400">
           <tr>
             <th className="px-4 py-3 font-medium">Wallet / Address</th>
             <th className="px-4 py-3 font-medium">Chain</th>
@@ -21,15 +21,15 @@ export function WalletIntelTable({ wallets }: { wallets: WalletIntelligence[] })
             <th className="px-4 py-3 font-medium">Action</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border bg-white">
+        <tbody className="divide-y divide-border bg-slate-900/80">
           {wallets.map((wallet) => {
             const primaryLabel = wallet.labels[0];
 
             return (
               <tr key={`${wallet.chain}-${wallet.address}`}>
                 <td className="px-4 py-4">
-                  <div className="font-medium text-slate-950">{shortAddress(wallet.address)}</div>
-                  <div className="text-xs text-muted-foreground">{wallet.addressType}</div>
+                  <div className="font-medium text-slate-100">{shortAddress(wallet.address)}</div>
+                  <div className="text-xs text-slate-400">{wallet.addressType}</div>
                 </td>
                 <td className="px-4 py-4">
                   <ChainBadge chain={wallet.chain} />
@@ -66,7 +66,7 @@ export function EntityTable({ entities }: { entities: EntityCluster[] }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[760px] text-left text-sm">
-        <thead className="border-b border-border bg-slate-50 text-xs uppercase text-muted-foreground">
+        <thead className="border-b border-slate-700 bg-slate-800 text-xs uppercase text-slate-400">
           <tr>
             <th className="px-4 py-3 font-medium">Entity</th>
             <th className="px-4 py-3 font-medium">Chains</th>
@@ -77,12 +77,12 @@ export function EntityTable({ entities }: { entities: EntityCluster[] }) {
             <th className="px-4 py-3 font-medium">Action</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border bg-white">
+        <tbody className="divide-y divide-border bg-slate-900/80">
           {entities.map((entity) => (
             <tr key={entity.id}>
               <td className="px-4 py-4">
-                <div className="font-medium text-slate-950">{entity.name}</div>
-                <div className="text-xs text-muted-foreground">{entity.category}</div>
+                <div className="font-medium text-slate-100">{entity.name}</div>
+                <div className="text-xs text-slate-400">{entity.category}</div>
               </td>
               <td className="px-4 py-4">
                 <div className="flex flex-wrap gap-2">

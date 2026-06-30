@@ -23,7 +23,7 @@ export function WalletDetail({ wallet }: { wallet: WalletIntelligence }) {
             <Metric label="Smart flow score" value={`${wallet.smartFlowScore}/100`} />
           </div>
           {wallet.entityId ? (
-            <div className="mt-4 rounded-md border border-border bg-slate-50 p-3 text-sm">
+            <div className="mt-4 rounded-md border border-slate-700 bg-slate-800 p-3 text-sm">
               Clustered with{" "}
               <Link className="font-medium text-primary" href={`/entities/${wallet.entityId}`}>
                 {wallet.entityName}
@@ -39,15 +39,15 @@ export function WalletDetail({ wallet }: { wallet: WalletIntelligence }) {
         <CardContent>
           <div className="grid gap-3 lg:grid-cols-2">
             {wallet.labels.map((label) => (
-              <div key={`${label.label}-${label.sourceType}`} className="rounded-md border border-border p-4">
+              <div key={`${label.label}-${label.sourceType}`} className="rounded-md border border-slate-700 p-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant="default">{label.category}</Badge>
                   <ConfidenceBadge confidence={label.confidence} />
                   <SourceBadge source={label.sourceType} />
                 </div>
-                <h2 className="mt-3 text-sm font-semibold text-slate-950">{label.label}</h2>
-                <p className="mt-2 text-xs leading-5 text-muted-foreground">{label.explanation}</p>
-                <p className="mt-2 text-xs text-muted-foreground">Source: {label.sourceRef}</p>
+                <h2 className="mt-3 text-sm font-semibold text-slate-100">{label.label}</h2>
+                <p className="mt-2 text-xs leading-5 text-slate-400">{label.explanation}</p>
+                <p className="mt-2 text-xs text-slate-400">Source: {label.sourceRef}</p>
               </div>
             ))}
           </div>
@@ -61,7 +61,7 @@ export function WalletDetail({ wallet }: { wallet: WalletIntelligence }) {
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-left text-sm">
-              <thead className="border-b border-border bg-slate-50 text-xs uppercase text-muted-foreground">
+              <thead className="border-b border-slate-700 bg-slate-800 text-xs uppercase text-slate-400">
                 <tr>
                   <th className="px-4 py-3 font-medium">Type</th>
                   <th className="px-4 py-3 font-medium">Asset</th>
@@ -72,7 +72,7 @@ export function WalletDetail({ wallet }: { wallet: WalletIntelligence }) {
                   <th className="px-4 py-3 font-medium">Tx</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border bg-white">
+              <tbody className="divide-y divide-border bg-slate-900/80">
                 {wallet.events.map((event) => (
                   <tr key={event.id}>
                     <td className="px-4 py-4">{event.type.replaceAll("_", " ")}</td>
@@ -117,9 +117,9 @@ export function EntityDetail({ entity }: { entity: EntityCluster }) {
         <CardContent>
           <div className="space-y-3">
             {entity.wallets.map((wallet) => (
-              <div key={`${wallet.chain}-${wallet.address}`} className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-border p-3">
+              <div key={`${wallet.chain}-${wallet.address}`} className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-slate-700 p-3">
                 <div>
-                  <p className="text-sm font-medium text-slate-950">{shortAddress(wallet.address)}</p>
+                  <p className="text-sm font-medium text-slate-100">{shortAddress(wallet.address)}</p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     <ChainBadge chain={wallet.chain} />
                     <ConfidenceBadge confidence={wallet.confidence} />
@@ -144,10 +144,10 @@ function BitcoinPanel({ wallet }: { wallet: WalletIntelligence }) {
       <CardContent>
         <div className="space-y-3">
           {wallet.bitcoinUtxos?.map((utxo) => (
-            <div key={`${utxo.txid}-${utxo.vout}`} className="grid gap-2 rounded-md border border-border p-3 text-sm sm:grid-cols-[1fr_auto_auto] sm:items-center">
+            <div key={`${utxo.txid}-${utxo.vout}`} className="grid gap-2 rounded-md border border-slate-700 p-3 text-sm sm:grid-cols-[1fr_auto_auto] sm:items-center">
               <div>
-                <p className="font-medium text-slate-950">{shortAddress(utxo.txid)}:{utxo.vout}</p>
-                <p className="text-xs text-muted-foreground">Age: {utxo.ageDays} days</p>
+                <p className="font-medium text-slate-100">{shortAddress(utxo.txid)}:{utxo.vout}</p>
+                <p className="text-xs text-slate-400">Age: {utxo.ageDays} days</p>
               </div>
               <span>{formatSats(utxo.valueSats)}</span>
               <Badge variant={utxo.status === "UNSPENT" ? "positive" : "default"}>{utxo.status}</Badge>
@@ -166,12 +166,12 @@ function SolanaPanel({ wallet }: { wallet: WalletIntelligence }) {
       <CardContent>
         <div className="space-y-3">
           {wallet.solanaPrograms?.map((program) => (
-            <div key={program.program} className="rounded-md border border-border p-3">
+            <div key={program.program} className="rounded-md border border-slate-700 p-3">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-medium text-slate-950">{program.program}</p>
+                <p className="text-sm font-medium text-slate-100">{program.program}</p>
                 <Badge variant="info">{program.interactions24h} calls / 24h</Badge>
               </div>
-              <p className="mt-2 text-xs leading-5 text-muted-foreground">{program.interpretation}</p>
+              <p className="mt-2 text-xs leading-5 text-slate-400">{program.interpretation}</p>
             </div>
           ))}
         </div>
@@ -182,9 +182,9 @@ function SolanaPanel({ wallet }: { wallet: WalletIntelligence }) {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-border p-3">
-      <p className="text-xs uppercase text-muted-foreground">{label}</p>
-      <p className="mt-2 text-lg font-semibold text-slate-950">{value}</p>
+    <div className="rounded-md border border-slate-700 p-3">
+      <p className="text-xs uppercase text-slate-400">{label}</p>
+      <p className="mt-2 text-lg font-semibold text-slate-100">{value}</p>
     </div>
   );
 }
