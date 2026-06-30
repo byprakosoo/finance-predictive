@@ -11,6 +11,7 @@ import {
   LayoutDashboard,
   LogOut,
   Network,
+  PiggyBank,
   Settings,
   Users,
   WalletCards,
@@ -20,6 +21,7 @@ import { Disclaimer } from "@/components/disclaimer";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/personal-finance", label: "Personal Finance", icon: PiggyBank },
   { href: "/portfolio", label: "Portfolio", icon: WalletCards },
   { href: "/wallets", label: "Wallets", icon: Network },
   { href: "/entities", label: "Entities", icon: Users },
@@ -81,6 +83,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <nav className="flex h-full items-center gap-10 text-lg text-slate-300">
             {[
               ["/dashboard", "Signals"],
+              ["/personal-finance", "Goals"],
               ["/portfolio", "Portfolio"],
               ["/alpha-hunter", "Analytics"],
               ["/morning-brief", "History"],
