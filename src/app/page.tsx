@@ -14,12 +14,12 @@ export default function LandingPage() {
       <section className="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-between px-4 py-6 sm:px-6">
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-teal-500">
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-cyan-500">
               <BarChart3 className="h-5 w-5" />
             </div>
             <div>
-              <p className="font-semibold">Crypto Alpha</p>
-              <p className="text-xs text-slate-400">Portfolio Tracker</p>
+              <p className="font-semibold">Finance Predictive</p>
+              <p className="text-xs text-slate-400">Live Alpha Terminal</p>
             </div>
           </div>
           <Link href="/dashboard">
@@ -30,7 +30,7 @@ export default function LandingPage() {
         <div className="grid gap-10 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
             <h1 className="max-w-3xl text-4xl font-semibold tracking-normal sm:text-5xl lg:text-6xl">
-              Crypto Alpha Portfolio Tracker
+              Finance Predictive
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300">
               A portfolio-first market intelligence workspace for tracking holdings, reviewing transparent signals,
@@ -46,7 +46,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-white/10 bg-slate-900/80/8 p-4 shadow-2xl">
+          <div className="rounded-lg border border-white/10 bg-slate-900/80 p-4 shadow-2xl">
             <div className="grid gap-3">
               {[
                 ["Total value", "$67,271.40", "+3.77% all-time"],
@@ -65,8 +65,8 @@ export default function LandingPage() {
 
         <div className="grid gap-3 pb-4 sm:grid-cols-3">
           {featureCards.map(({ icon: Icon, label }) => (
-            <div key={label} className="flex items-center gap-3 rounded-md border border-white/10 bg-slate-900/80/5 p-4 text-sm text-slate-200">
-              <Icon className="h-4 w-4 text-teal-300" />
+            <div key={label} className="flex items-center gap-3 rounded-md border border-white/10 bg-slate-900/80 p-4 text-sm text-slate-200">
+              <Icon className="h-4 w-4 text-cyan-300" />
               {label}
             </div>
           ))}

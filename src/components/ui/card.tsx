@@ -8,7 +8,7 @@ export function Card({
   className?: string;
 }) {
   return (
-    <section className={cn("rounded-xl border border-slate-700 bg-slate-950/35 text-slate-100 shadow-[0_0_45px_rgba(34,211,238,0.04)]", className)}>
+    <section className={cn("rounded-xl border border-border bg-background/40 text-foreground shadow-[0_0_45px_hsl(var(--accent)/0.04)]", className)}>
       {children}
     </section>
   );
@@ -24,10 +24,10 @@ export function CardHeader({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-16 flex-wrap items-start justify-between gap-3 border-b border-slate-700 px-5 py-5">
+    <div className="flex min-h-16 flex-wrap items-start justify-between gap-3 border-b border-border px-5 py-5">
       <div>
-        <h2 className="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">{title}</h2>
-        {description ? <p className="mt-2 text-sm leading-6 text-slate-400">{description}</p> : null}
+        <h2 className="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-accent">{title}</h2>
+        {description ? <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p> : null}
       </div>
       {action}
     </div>

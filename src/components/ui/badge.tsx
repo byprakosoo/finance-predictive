@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 
 const variants = {
-  default: "border-slate-600 bg-slate-800 text-slate-200",
-  positive: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-  warning: "border-amber-300/30 bg-amber-300/10 text-amber-200",
-  danger: "border-rose-300/30 bg-rose-300/10 text-rose-200",
-  info: "border-cyan-300/30 bg-cyan-300/10 text-cyan-200",
+  default: "border-border bg-muted text-foreground",
+  positive: "border-success/30 bg-success/10 text-success",
+  warning: "border-warning/30 bg-warning/10 text-warning",
+  danger: "border-danger/30 bg-danger/10 text-danger",
+  info: "border-accent/30 bg-accent/10 text-accent",
 };
 
 export type BadgeVariant = keyof typeof variants;

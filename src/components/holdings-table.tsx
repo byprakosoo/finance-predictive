@@ -19,17 +19,17 @@ export function HoldingsTable({
 }) {
   if (holdings.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-slate-700 p-8 text-center">
-        <p className="font-medium text-slate-100">No holdings yet</p>
-        <p className="mt-2 text-sm text-slate-400">Add your first crypto holding to calculate value and signals.</p>
+      <div className="rounded-lg border border-dashed border-border p-8 text-center">
+        <p className="font-medium text-foreground">No holdings yet</p>
+        <p className="mt-2 text-sm text-muted-foreground">Add your first crypto holding to calculate value and signals.</p>
       </div>
     );
   }
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[920px] text-left text-sm">
-        <thead className="border-b border-slate-700 bg-slate-800 text-xs uppercase text-slate-400">
+      <table className="responsive-table w-full min-w-[920px] text-left text-sm">
+        <thead className="border-b border-border bg-muted text-xs uppercase text-muted-foreground">
           <tr>
             <th className="px-4 py-3 font-medium">Asset</th>
             <th className="px-4 py-3 font-medium">Quantity</th>
@@ -42,7 +42,7 @@ export function HoldingsTable({
             <th className="px-4 py-3 font-medium">Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border bg-slate-900/80">
+        <tbody className="divide-y divide-border bg-card/40">
           {holdings.map((holding) => {
             const currentValue = holding.quantity * holding.currentPrice;
             const invested = holding.quantity * holding.averageBuyPrice;
@@ -52,20 +52,20 @@ export function HoldingsTable({
 
             return (
               <tr key={holding.id}>
-                <td className="px-4 py-4">
-                  <div className="font-medium text-slate-100">{holding.name}</div>
-                  <div className="text-xs text-slate-400">{holding.symbol}</div>
+                <td data-label="Asset" className="px-4 py-4">
+                  <div className="font-medium text-foreground">{holding.name}</div>
+                  <div className="text-xs text-muted-foreground">{holding.symbol}</div>
                 </td>
-                <td className="px-4 py-4">{formatNumber(holding.quantity)}</td>
-                <td className="px-4 py-4">{formatCurrency(holding.averageBuyPrice)}</td>
-                <td className="px-4 py-4">{formatCurrency(holding.currentPrice)}</td>
-                <td className="px-4 py-4 font-medium">{formatCurrency(currentValue)}</td>
-                <td className={pl >= 0 ? "px-4 py-4 text-emerald-700" : "px-4 py-4 text-rose-700"}>{formatCurrency(pl)}</td>
-                <td className={plPercent >= 0 ? "px-4 py-4 text-emerald-700" : "px-4 py-4 text-rose-700"}>
+                <td data-label="Quantity" className="px-4 py-4">{formatNumber(holding.quantity)}</td>
+                <td data-label="Avg Buy" className="px-4 py-4">{formatCurrency(holding.averageBuyPrice)}</td>
+                <td data-label="Current" className="px-4 py-4">{formatCurrency(holding.currentPrice)}</td>
+                <td data-label="Value" className="px-4 py-4 font-medium">{formatCurrency(currentValue)}</td>
+                <td data-label="P/L" className={pl >= 0 ? "px-4 py-4 text-success" : "px-4 py-4 text-danger"}>{formatCurrency(pl)}</td>
+                <td data-label="P/L %" className={plPercent >= 0 ? "px-4 py-4 text-success" : "px-4 py-4 text-danger"}>
                   {formatPercent(plPercent)}
                 </td>
-                <td className="px-4 py-4">{signal ? <SignalBadge signal={signal.signal} /> : null}</td>
-                <td className="px-4 py-4">
+                <td data-label="Signal" className="px-4 py-4">{signal ? <SignalBadge signal={signal.signal} /> : null}</td>
+                <td data-label="Actions" className="px-4 py-4">
                   <div className="flex gap-2">
                     <Button size="icon" variant="ghost" aria-label={`Edit ${holding.symbol}`} onClick={() => onEdit?.(holding)}>
                       <Pencil className="h-4 w-4" />

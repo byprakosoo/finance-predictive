@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 
 const variants = {
-  primary: "border border-cyan-200/20 bg-cyan-500 text-slate-100 shadow-[0_0_28px_rgba(6,182,212,0.18)] hover:bg-cyan-300",
-  secondary: "border border-slate-600 bg-slate-800 text-slate-100 hover:border-cyan-300 hover:text-cyan-300",
-  ghost: "text-slate-300 hover:bg-slate-800 hover:text-cyan-300",
-  danger: "border border-rose-300/30 bg-rose-300/10 text-rose-200 hover:bg-rose-300/20",
+  primary: "border border-accent/20 bg-primary text-primary-foreground shadow-glow hover:bg-accent",
+  secondary: "border border-border bg-secondary text-secondary-foreground hover:border-accent hover:text-accent",
+  ghost: "text-muted-foreground hover:bg-secondary hover:text-accent",
+  danger: "border border-danger/30 bg-danger/10 text-danger hover:bg-danger/20",
 };
 
 export function Button({
